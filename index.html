@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZpXl5XVy2I5NTccQodSBd2HMvv97LXsA"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2yp1X5xvY2lSTNccQ0dS82dHWv97YL5A"></script>
     <script>
         function initMap(events) {
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 52.453802, lng: -2.010665 },
+                center: { lat: 52.45382, lng: -2.01665 },
                 zoom: 7
             });
 
-            var eventData = JSON.parse(decodeURIComponent(events));
+            // Hardcoded sample event data for testing
+            var eventData = JSON.parse('[{"Title": "Test Event", "Latitude": "52.45382", "Longitude": "-2.01665", "Status": "Active"}]');
 
-            eventData.forEach(function(event) {
+            eventData.forEach(function (event) {
                 var marker = new google.maps.Marker({
                     position: { lat: parseFloat(event.Latitude), lng: parseFloat(event.Longitude) },
                     map: map,
@@ -19,24 +20,26 @@
                     label: event.Title.charAt(0)
                 });
 
-                var infoWindow = new google.maps.InfoWindow({
+                var infowindow = new google.maps.InfoWindow({
                     content: "<h3>" + event.Title + "</h3><p>" + event.Status + "</p>"
                 });
 
-                marker.addListener('click', function() {
-                    infoWindow.open(map, marker);
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
                 });
             });
         }
 
-        window.addEventListener('message', function(e) {
-            if (e.data) {
-                initMap(e.data);
-            }
-        }, false);
+        // Call the initMap function immediately for testing
+        window.onload = function () {
+            initMap();
+        };
     </script>
 </head>
 <body>
-    <div id="map" style="width:100%;height:100%;"></div>
+    <div id="map" style="width:100%;height:100%"></div>
+</body>
+</html>
+
 </body>
 </html>
